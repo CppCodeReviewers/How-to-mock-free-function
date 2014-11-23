@@ -1,7 +1,7 @@
 How-to-mock-free-function
 =========================
 
-# Problem
+## Problem
 
 There are situations where we need to change or refactor some part of code where dependencies are impossible to replace in runtime for testing (ie. using dependency injection technique). Sometimes we have only header files of such entities with libraries available but only for different platform then we are working on.
 
@@ -79,7 +79,7 @@ void Resource_Free(void* resource);
 
 We don't have access to ResourceSystem implementation - it is delivered for us as library for embedded platform.
 
-# Possible solutions
+## Possible solutions
 To think about possible solution lets think about when/how we can replace one entity with its test double.
 
 1. Run-time - dependency injection - most common use for mocking purposes (require dynamic polymorphic types!)
@@ -89,7 +89,7 @@ To think about possible solution lets think about when/how we can replace one en
 
 I would like to present one solution which use linking time replacement and Google Mock framework.
 
-# Linking-time solution
+## Linking-time solution
 Google Mock framework gives us tools for mocking polymorphic types (dynamic and static way). Unfortunatelly there are no support for dealing with free function mocking and non polymorphic types. Nevertheless there is one solution which can handle some of the cases and which is worth mentioning - lets see example.
 
 Lets introduce ResourceSystemMock:
@@ -206,5 +206,5 @@ At line 9 we create `ResourceSystemMock` as `rs` object (it is created inside te
 
 And that's it - works like a dream! Unfortunately this solution has its own limitation that we cannot have more then one `ResourceSystemMock` object created at a time (every creation of `ResourceSystemMock` override `_reserve` and `_free` static variables - that's why we introduce assert in constructor that these variables has to be empty).
 
-# Expert question
+## Expert question
 Can we solve the problem with only one ResourceSystemMock  at time? I am waiting for proposals!
