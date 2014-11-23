@@ -112,6 +112,7 @@ This is nothing new - common mock done using Google Mock framework, but it is no
 
 Lets look on cpp file:
 
+```
 #include "ResourceSystemMock.h"
 #include <functional>
 
@@ -140,7 +141,8 @@ void Resource_Free(void* resource)
 { 
 	_free(resource); 
 }
- 
+```
+
 What is happening here? Most important thing to notice is implementation of free functions `void* Resource_Reserve(size_t size)`  and `void Resource_Free(void* resource)` . The only thing they are doing is passing work to `std::function` static objects (`_reserve`  and `_free` ) which are initialized inside `ResourceSystemMock` constructor (line 10 and 11). Which means that after creation of `ResourceSystemMock`  free function `Resource_Reserve`  will delegate its work to `ResourceSystemMock::Resource_Reserve`  method and free function `Resource_Free`  will delegate its work to `ResourceSystemMock::Resource_Free`  method - which as we all know are mocked by our Google Mock framework. That means that we can make expectations on `Resource_Reserve`  and `Resource_Free`  free functions via expectations on `ResourceSystemMock::Resource_Reserve`  and `ResourceSystemMock::Resource_Free`  methods.
 
 Lets see some test code which will probable make things more clear.
