@@ -65,7 +65,7 @@ namespace Decoder
 }
 ```
 
-As you can see code is using external free functions called Resource_Reserve  and Resource_Free  for memory management.
+As you can see code is using external free functions called `Resource_Reserve`  and `Resource_Free` for memory management.
 
 ```
 #ifndef RESOURCE_SYSTEM_H 
